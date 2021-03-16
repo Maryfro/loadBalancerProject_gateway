@@ -19,6 +19,7 @@ public class ServerTask implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Server");
         ServerInfo serverInfo = serverSource.getOptimalServer();
         String host = serverInfo.getHostname();
         int port = serverInfo.getPort();

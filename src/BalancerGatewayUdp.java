@@ -21,6 +21,7 @@ public class BalancerGatewayUdp implements Runnable {
     @Override
     public void run() {
         DatagramSocket serverUdpSocket = null;
+
         try {
             serverUdpSocket = new DatagramSocket(udpPort);
             byte[] dataIn = new byte[PACKET_SIZE];

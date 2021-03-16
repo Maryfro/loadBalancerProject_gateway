@@ -1,6 +1,4 @@
-import model.ServerInfo;
 import model.ServerSource;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,26 +19,27 @@ public class ClientGatewayTcp implements Runnable {
 
     @Override
     public void run() {
-
-        ServerSocket serverSocket = null;
+        ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(tcpPort);
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
-
         ExecutorService executor = Executors.newFixedThreadPool(threadPoolSize);
+
         while (true) {
-            Socket socketToClient = null;
+            Socket socket = null;
             try {
-                socketToClient = serverSocket.accept();
+                socket = serverSocket.accept();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("Connected");
-            Runnable serverTask = new ServerTask(socketToClient, serverSource);
-            executor.execute(serverTask);
 
+            System.out.println("Connected client");
+
+            Runnable serverTask = new ServerTask(socket, serverSource);
+            executor.execute(serverTask);
         }
     }
 }
